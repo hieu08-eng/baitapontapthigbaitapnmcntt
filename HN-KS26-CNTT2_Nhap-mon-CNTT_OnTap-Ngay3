@@ -1,0 +1,62 @@
+file 
+# Quản Lý Website & Học Phí Trung Tâm Tiếng Anh (TTA)
+
+## Giới thiệu dự án
+Website quản lý trung tâm tiếng Anh là hệ thống hỗ trợ **tối ưu hóa** quy trình quản lý học viên và *tự động hóa* bảng tính học phí chính xác, minh bạch dành cho bộ phận kế toán.
+
+## Cấu trúc thư mục dự án
+| Thư mục / File | Nội dung mô tả chi tiết |
+| :--- | :--- |
+| `.env` | Chứa các biến môi trường và dữ liệu bảo mật giả lập |
+| `data/` | Lưu trữ các tệp Excel cơ sở dữ liệu (`hoc_vien_khoa_3.xlsx`, `hoc_phi_thang_10.xlsx`) |
+| `docs/` | Tài liệu hướng dẫn kỹ thuật và quy trình vận hành |
+
+## Quy trình đăng ký học tại TT
+1. Học viên chọn khóa học phù hợp tại trung tâm.
+2. Nhân viên tiếp nhận thông tin và tạo phiếu đăng ký trên hệ thống.
+3. Kế toán kiểm tra bảng học phí tháng 10 và xác nhận thanh toán.
+
+## Lệnh Terminal kiểm tra thư mục
+```powershell
+Get-ChildItem -Path . -Recurse -Force
+bài 2
+ài 2. Xử lý bảng tính Excel (hoc_phi_thang_10.xlsx)
+Em đã tiến hành mở file hoc_phi_thang_10.xlsx và thực hiện các yêu cầu như sau:
+
+a) Dùng hàm VLOOKUP để điền dữ liệu:
+
+Tại cột ten_khoa (cột E) ở sheet DangKy, em dùng công thức:=VLOOKUP(C2, KhoaHoc!$A$2:$C$8, 2, FALSE)
+
+Tại cột hoc_phi (cột F), em dùng công thức:=VLOOKUP(C2, KhoaHoc!$A$2:$C$8, 3, FALSE)
+
+Sau đó kéo công thức xuống cho toàn bộ 15 lượt đăng ký của học viên.
+
+b) Tính tổng học phí:
+
+Tại cột tong_hoc_phi (cột G) của sheet DangKy, em dùng công thức tính toán:=D2*F2 rồi kéo công thức áp dụng cho tất cả các dòng còn lại.
+
+c) Tra cứu học phí ở sheet KhoaHoc:
+
+Tại ô E2 của sheet KhoaHoc, em nhập mã khóa IE02.
+
+Tại ô F2, em dùng công thức VLOOKUP để tra cứu:=VLOOKUP(E2, $A$2:$C$8, 3, FALSE)
+
+Em đã thử đổi ô E2 sang các mã khác để kiểm tra kết quả hoạt động chính xác, sau đó đã trả lại mã ban đầu là IE02.
+
+d) Bật AutoFilter và lọc dữ liệu:
+
+Em đã bôi đen bảng dữ liệu sheet DangKy và bật AutoFilter.
+
+Lọc cột tong_hoc_phi với điều kiện lớn hơn hoặc bằng (>=) 6000000.
+
+Số dòng còn hiển thị sau khi lọc là: 8 dòng (bao gồm cả dòng tiêu đề bảng, tức là có 7 dòng dữ liệu học viên thỏa mãn điều kiện).
+
+e) Trả lời câu hỏi lý thuyết:
+
+Vì sao vùng tra cứu cần dấu $ (ví dụ KhoaHoc!$A$2:$C$8)?
+
+Trả lời: Dấu $ dùng để tạo tham chiếu tuyệt đối. Khi chúng ta kéo công thức xuống các dòng bên dưới, tọa độ của vùng dữ liệu tra cứu sẽ được giữ nguyên cố định không bị dịch chuyển theo.
+
+Điều gì xảy ra nếu bỏ dấu $ rồi kéo công thức xuống?
+
+Trả lời: Nếu bỏ dấu $ (ví dụ thành A2:C8), khi kéo công thức xuống các dòng phía dưới (ví dụ dòng 3, dòng 4...), vùng dữ liệu tra cứu cũng sẽ bị trôi xuống tương ứng thành A3:C9, A4:C10... Điều này làm cho Excel bỏ sót các dòng đầu tiên của bảng danh mục khóa học, dẫn đến việc tìm kiếm bị lệch và trả về lỗi #N/A ở các dòng phía dưới
