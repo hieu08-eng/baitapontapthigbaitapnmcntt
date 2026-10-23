@@ -1,0 +1,88 @@
+MẪU TRÌNH BÀY TRONG bai_lam.md
+4.2. Thao tác máy tính cơ bản bằng CLI
+Các lệnh PowerShell đã thực hiện tại thư mục gốc van-phong-pham-website:
+
+PowerShell
+Get-Location
+Get-ChildItem -Force
+Move-Item "nhap_hang.txt" "docs/"
+Move-Item "logo.png" "media/"
+Copy-Item "media/logo.png" "backup/"
+Remove-Item "temp_131.tmp"
+Set-Location "logs"; Get-ChildItem; Set-Location ".."
+Get-ChildItem -Recurse -Force
+Kết quả liệt kê toàn bộ dự án (kể cả file ẩn):
+
+Plaintext
+    Directory: C:\van-phong-pham-website
+
+Mode                 LastWriteTime         Length Name
+----                 -------------         ------+ ----
+d----          10/23/2026  10:30 AM                backup
+d----          10/23/2026  10:30 AM                data
+d----          10/23/2026  10:30 AM                docs
+d----          10/23/2026  10:30 AM                logs
+d----          10/23/2026  10:30 AM                media
+-a---          10/23/2026  10:30 AM            120 .env
+-a---          10/23/2026  10:30 AM            450 bai_lam.md
+4.3. Lọc log thủ công
+Lệnh PowerShell:
+
+PowerShell
+Get-Content logs/shop.log | Select-String "ERROR" | Select-Object -ExpandProperty Line > logs/daily_report.txt
+Get-Content logs/daily_report.txt -TotalCount 2
+Hai dòng lỗi đầu tiên trong file logs/daily_report.txt:
+
+Plaintext
+[2026-10-01 08:15:23] [ERROR] Ket noi co so du lieu that bai!
+[2026-10-01 09:20:11] [ERROR] Khong tìm thay duong dan file cau hinh!
+4.5. Hoàn thiện script có khung sẵn (auto_report.ps1)
+Nội dung hoàn chỉnh của file script:
+
+PowerShell
+# Script: auto_report.ps1
+# Tac gia: Nguyen Van An
+# Ngay tao: 2026-10-23
+
+Write-Host "Dang loc log..."
+
+"=== BAO CAO LOI ===" > logs/auto_report.txt
+Get-Content logs/shop.log | Select-String "ERROR" >> logs/auto_report.txt
+
+Write-Host "Hoan thanh!"
+Lệnh chạy và nội dung file logs/auto_report.txt:
+
+PowerShell
+.\auto_report.ps1
+Get-Content logs/auto_report.txt
+Kết quả xuất ra:
+
+Plaintext
+=== BAO CAO LOI ===
+[2026-10-01 08:15:23] [ERROR] Ket noi co so du lieu that bai!
+[2026-10-01 09:20:11] [ERROR] Khong tìm thay duong dan file cau hinh!
+[2026-10-02 14:10:05] [ERROR] Loi xac thuc nguoi dung!
+4.6. Đếm số dòng lỗi
+Lệnh PowerShell:
+
+PowerShell
+(Get-Content logs/shop.log | Select-String "ERROR").Count
+Kết quả:
+
+Plaintext
+3
+4.7. Báo cáo tổng hợp
+Các lệnh PowerShell đã thực hiện:
+
+PowerShell
+"=== TONG HOP LOG ===" > logs/tong_hop.txt
+Get-Content logs/shop.log | Select-String "WARNING" >> logs/tong_hop.txt
+(Get-Content logs/shop.log | Select-String "ERROR").Count >> logs/tong_hop.txt
+Get-Content logs/tong_hop.txt
+Nội dung file logs/tong_hop.txt:
+
+Plaintext
+=== TONG HOP LOG ===
+[2026-10-01 10:00:12] [WARNING] Bo nho RAM sap day (>85%)!
+[2026-10-02 11:30:44] [WARNING] Phan hoi tu may chủ hoi cham!
+3
