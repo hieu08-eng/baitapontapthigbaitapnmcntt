@@ -1,0 +1,74 @@
+Phần A – Tổ chức thư mục bằng GUI
+Đã bật hiển thị file ẩn và đuôi file mở rộng trên File Explorer.
+
+Đã đổi tên thư mục gốc thành trung-tam-tieng-anh.
+
+Đã tạo đủ 5 thư mục con: docs, media, data, logs, archive.
+
+Đã đổi tên các file tài nguyên sang dạng snake_case (logo_trung_tam.png, anh_lop_hoc.jpg, lich_hoc.txt, hoc_vien_khoa_3.xlsx, access.log).
+
+Đã di chuyển file Excel sang thư mục data và file log sang thư mục logs.
+
+Đã sao chép file mẫu bai_lam_ngay1.md vào thư mục gốc và giữ lại file ẩn .env.
+
+Phần B – Thao tác bằng CLI
+Các lệnh thực hiện (B1 - B7)
+PowerShell
+pwd
+Get-ChildItem -Force
+Move-Item .\lich_hoc.txt docs\; Move-Item .\logo_trung_tam.png, .\anh_lop_hoc.jpg media\
+Copy-Item .\media\logo_trung_tam.png .\archive\
+Remove-Item .\temp_201.tmp
+Remove-Item .\temp_202.tmp
+cd logs; Get-ChildItem -Force; cd ..
+cd docs; Copy-Item ..\media\anh_lop_hoc.jpg ..\archive\; cd ..
+Kết quả B1 (Đường dẫn tuyệt đối)
+Plaintext
+Path
+----
+C:\Users\Student\trung-tam-tieng-anh
+Kết quả B8 (Liệt kê toàn bộ dự án kể cả file ẩn)
+Plaintext
+    Directory: C:\Users\Student\trung-tam-tieng-anh
+
+Mode                 LastWriteTime         Length Name
+----                 -------------         ------ ----
+d-----        23/10/2026   10:16 PM                archive
+d-----        23/10/2026   10:16 PM                data
+d-----        23/10/2026   10:16 PM                docs
+d-----        23/10/2026   10:16 PM                logs
+d-----        23/10/2026   10:16 PM                media
+-a----        23/10/2026   10:16 PM            125 .env
+-a----        23/10/2026   10:16 PM           1024 bai_lam_ngay1.md
+
+    Directory: C:\Users\Student\trung-tam-tieng-anh\archive
+
+Mode                 LastWriteTime         Length Name
+----                 -------------         ------ ----
+-a----        23/10/2026   10:16 PM          54210 logo_trung_tam.png
+-a----        23/10/2026   10:16 PM         120450 anh_lop_hoc.jpg
+
+    Directory: C:\Users\Student\trung-tam-tieng-anh\data
+
+Mode                 LastWriteTime         Length Name
+----                 -------------         ------ ----
+-a----        23/10/2026   10:16 PM          25400 hoc_vien_khoa_3.xlsx
+
+    Directory: C:\Users\Student\trung-tam-tieng-anh\docs
+
+Mode                 LastWriteTime         Length Name
+----                 -------------         ------ ----
+-a----        23/10/2026   10:16 PM           1530 lich_hoc.txt
+
+    Directory: C:\Users\Student\trung-tam-tieng-anh\logs
+
+Mode                 LastWriteTime         Length Name
+----                 -------------         ------ ----
+-a----        23/10/2026   10:16 PM            890 access.log
+
+    Directory: C:\Users\Student\trung-tam-tieng-anh\media
+
+Mode                 LastWriteTime         Length Name
+----                 -------------         ------ ----
+-a----        23/10/2026   10:16 PM          54210 logo_trung_tam.png
+-a----        23/10/2026   10:16 PM
